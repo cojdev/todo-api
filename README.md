@@ -1,5 +1,29 @@
 # Todo API
 
+## Requirements
+* docker and docker-compose
+
+## Setup
+
+Run docker container
+```sh
+docker-compose up --build
+```
+
+Access container and install dependencies
+```sh
+# get container id
+docker ps
+
+# access container
+docker exec -it <container-id> /bin/bash
+
+# in container
+composer install
+```
+
+The application will be accessible at http://localhost:4001
+
 ## Endpoints
 
 ### Get all tasks `GET /task`
