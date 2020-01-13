@@ -35,7 +35,7 @@ class Task {
       return [
         'success' => false,
         "code" => 404,
-        'message' => "No tasks not found"
+        'message' => "No tasks found"
       ];
     } catch (PDOException $e) {
       die($e->getMessage());
