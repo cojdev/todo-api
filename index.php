@@ -69,7 +69,7 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 });
 
 // get tasks
-$app->get('/task', function ($request, $response, $args) {
+$app->get('/task[/]', function ($request, $response, $args) {
   $model = new Task($this->db);
   $params = $request->getQueryParams();
 

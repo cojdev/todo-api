@@ -8,13 +8,14 @@ const endpoint = qs('#endpoint');
 const method = qs('#method');
 const parameters = qs('#parameters');
 const request = qs('#request-body');
+const date = new Date();
 
 const endpoints = {
   task: {
     GET: null,
     POST: {
       description: 'what needs to be done',
-      due: '2019-12-25',
+      due: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+1}`,
       starred: false,
     },
   },
