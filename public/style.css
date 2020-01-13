@@ -20,6 +20,7 @@ main {
 label {
   font-size: .8rem;
   font-weight: 700;
+  display: block;
   /* color: #222; */
 }
 
@@ -102,3 +103,5 @@ pre {
 
 .fb-0 { flex-basis: 0; }
 .fg-0 { flex-grow: 0; }
+
+.mb-1 { margin-bottom: 1rem; }

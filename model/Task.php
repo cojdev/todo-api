@@ -233,4 +233,13 @@ class Task {
       ];
     }
   }
+
+  function importJson($json) {
+    $data = json_decode($json);
+
+    foreach ($data as $d) {
+      $this->add($d);
+    }
+
+  }
 }

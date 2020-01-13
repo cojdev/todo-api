@@ -23,7 +23,7 @@ const endpoints = {
     GET: null,
     PATCH: {
       description: 'modified post',
-      due: '2020-01-01',
+      due: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+2}`,
       starred: true,
     },
     DELETE: null,
@@ -71,6 +71,23 @@ form.evt('submit', (e) => {
   console.log(body);
 
   ajax(url, qs('#method').value, body)
+    .then((data) => {
+      console.log(data.parsed);
+      qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
+    })
+    .catch((data) => {
+      console.log(data.parsed);
+      qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
+    });
+});
+
+qs('#import-button').evt('click', e => {
+  e.preventDefault();
+  const url = `/import`;
+  const body = qs('#request-body').value ? JSON.parse(qs('import').value) : null;
+  console.log(body);
+
+  ajax(url, 'PUT', body)
     .then((data) => {
       console.log(data.parsed);
       qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
