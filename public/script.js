@@ -1,8 +1,3 @@
-const qs = (selector, element = document) => element.querySelector(selector);
-EventTarget.prototype.evt = function (event, callback) {
-  this.addEventListener(event, callback);
-};
-
 const form = qs('form');
 const endpoint = qs('#endpoint');
 const method = qs('#method');

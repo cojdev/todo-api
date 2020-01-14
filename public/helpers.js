@@ -1,4 +1,9 @@
 /* eslint-disable no-unused-vars */
+const qs = (selector, element = document) => element.querySelector(selector);
+EventTarget.prototype.evt = function (event, callback) {
+  this.addEventListener(event, callback);
+};
+
 function ajax(url, method, requestBody = null) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();

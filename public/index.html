@@ -10,31 +10,36 @@
 </head>
 
 <body>
-  <h1>Todo App</h1>
-  <h2>Add task</h2>
-  <form id="add-form">
-    <input type="text" name="description" id="description" placeholder="What do you need to do?">
+  <main>
+    <h1>Todo App</h1>
+    <h2>Add task</h2>
+    <form id="add-form">
+      <input type="text" name="description" id="description" placeholder="What do you need to do?">
 
-    <label for="starred">Starred</label>
-    <input type="checkbox" name="starred" id="starred">
+      <label for="starred">Starred</label>
+      <input type="checkbox" name="starred" id="starred">
 
-    <label for="due">due</label>
-    <input type="date" name="due" id="due">
+      <label for="due">due</label>
+      <input type="date" name="due" id="due">
 
-    <button type="submit">Add</button>
-  </form>
+      <button type="submit">Add</button>
+    </form>
 
-  <div class="output">Loading...</div>
+    <h2>All tasks (<span id="task-count"></span>)</h2>
+    <div class="output">Loading...</div>
+  </main>
+  
 
   <script src="helpers.js"></script>
   <script>
-    document.getElementById('due').valueAsDate = new Date(Date.now() + (24 * 60 * 60 * 1000));
+    qs('#due').valueAsDate = new Date(Date.now() + (24 * 60 * 60 * 1000));
     const form = document.getElementById('add-form')
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       addTask(e.currentTarget.value);
     })
-    const output = document.querySelector('.output');
+    const output = qs('.output');
+    const taskCount = qs('#task-count');
 
     function addTask(id) {
       const data = {
@@ -72,6 +77,7 @@
             <th>Description</th>
             <th>Due</th>
             <th>Starred</th>
+            <th>Completed</th>
             <th>Delete</th>
           </tr>
           ${json.data.map(item => 
@@ -80,9 +86,11 @@
             <td>${item.description}</td>
             <td>${item.due}</td>
             <td>${item.starred}</td>
+            <td>${item.completed}</td>
             <td><button class="delete-button" data-id="${item.id}">Delete ${item.id}</button></td>
           </tr>`).join('')}
         </table>`;
+        taskCount.innerText = `${json.data.length} (${json.data.filter(item => item.completed !== null).length} completed)`;
 
         document.querySelectorAll('.delete-button').forEach(item => {item.addEventListener('click', function (e) {
           deleteTask(e.currentTarget.getAttribute('data-id'));
@@ -90,7 +98,7 @@
       });
     }
 
-    loadTasks(6);
+    loadTasks();
   </script>
 </body>
 

@@ -39,6 +39,10 @@ textarea {
   border-radius: 4px;
 }
 
+select {
+  -webkit-appearance: none;
+}
+
 textarea {
   font-family: monospace;
 }
