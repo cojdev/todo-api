@@ -84,10 +84,10 @@ form.evt('submit', (e) => {
 qs('#import-button').evt('click', e => {
   e.preventDefault();
   const url = `/import`;
-  const body = qs('#request-body').value ? JSON.parse(qs('import').value) : null;
+  const body = qs('#import-json').value ? JSON.parse(qs('#import-json').value) : null;
   console.log(body);
 
-  ajax(url, 'PUT', body)
+  ajax(url, 'POST', body)
     .then((data) => {
       console.log(data.parsed);
       qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;

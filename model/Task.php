@@ -234,12 +234,30 @@ class Task {
     }
   }
 
-  function importJson($json) {
-    $data = json_decode($json);
+  function import($data) {
+    try {
+      $imported = 0;
+      foreach ($data as $d) {
+        $call = $this->add($d);
+        if ($call['success'] === false) {
+          throw new Exception($call['message'], 1);
+        }
+        $imported++;
+      }
 
-    foreach ($data as $d) {
-      $this->add($d);
+      return [
+        'success' => true,
+        'message' => 'Import complete',
+        'count' => $imported,
+      ];
+    } catch (Exception $e) {
+      return [
+        'success' => false,
+        "code" => 500,
+        'message' => $e->getMessage(),
+      ];
     }
+    
 
   }
 }

@@ -58,7 +58,7 @@ $app->add(function ($req, $res, $next) {
           ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 });
 
-$app->get('/', function (Request $request, Response $response, array $args) {
+$app->get('/', function ($request, $response, $args) {
   $data = [
     'foo' => 'bar',
     'fizz' => 'buzz',
@@ -143,6 +143,15 @@ $app->delete('/task/{id}', function ($request, $response, $args) {
   $model = new Task($this->db);
   $ret = $model->delete($args['id']);
 
+  return $response->withJson($ret, $ret['code'] ?: 200);
+});
+
+$app->post('/import[/]', function ($request, $response, $args) {
+  $body = $request->getParsedBody();
+  
+  $model = new Task($this->db);
+  $ret = $model->import($body);
+  
   return $response->withJson($ret, $ret['code'] ?: 200);
 });
 

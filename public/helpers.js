@@ -6,13 +6,22 @@ function ajax(url, method, requestBody = null) {
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 400) {
         // Success!
-        resolve({
-          raw: xhr.responseText,
-          parsed: JSON.parse(xhr.responseText),
-        });
+        try {
+          return resolve({
+            raw: xhr.responseText,
+            parsed: JSON.parse(xhr.responseText),
+          });
+        } catch (e) {
+          if (e.message.includes('end of JSON')) {
+            return resolve({ raw: xhr.responseText });
+          };
+          console.log(e.message); 
+          console.error(e);
+        }
+        
       } else {
         // We reached our target server, but it returned an error
-        reject({
+        return reject({
           raw: xhr.responseText,
           parsed: JSON.parse(xhr.responseText),
         });

@@ -48,11 +48,20 @@ button {
   border-radius: 4px;
   font-family: inherit;
   font-size: inherit;
-  padding: 1ch 1rem;
+  padding: .5ch 1ch;
   border: none;
   color: #fff;
   background: #e14;
   cursor: pointer;
+  transition: 150ms ease;
+}
+
+button:hover {
+  background-color: #f47;
+}
+
+button:active {
+  background-color: #e14;
 }
 
 output {
@@ -86,6 +95,16 @@ pre {
   display: block;
   margin: .5rem;
   flex-grow: 1;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+th,td {
+  border: 1px solid #ccc;
+  padding: .5ch 1ch;
 }
 
 .w-1 { width: calc(100% * 1/12 - 1rem); }
