@@ -10,6 +10,7 @@ class Task {
   function getAll($params) {
     try {
       // parameters
+      // NOTE: this is a significant security hole
       $limit = isset($params['limit']) ? ' LIMIT ' . $params['limit'] : '';
       $sort = isset($params['sort']) ? ' ORDER BY Task.created ' . $params['sort'] : ' ORDER BY Task.created DESC';
       
@@ -83,6 +84,7 @@ class Task {
       if ($data['description'] === '') {
         throw new Exception("No description provided.", 69);
       }
+
       if (strtotime($data['due']) < strtotime(date('Y-m-d h:i:s'))) {
         throw new Exception("Date due date cannot be before now.", 69);
         
@@ -237,6 +239,11 @@ class Task {
   function import($data) {
     try {
       $imported = 0;
+
+      if (is_array($data) === false) {
+        throw new Exception('You fucked up', 1);
+      }
+
       foreach ($data as $d) {
         $call = $this->add($d);
         if ($call['success'] === false) {

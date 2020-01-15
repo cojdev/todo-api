@@ -43,8 +43,9 @@ select {
   -webkit-appearance: none;
 }
 
-textarea {
-  font-family: monospace;
+.json-editor {
+  height: 300px;
+  margin-bottom: 1ch;
 }
 
 button {

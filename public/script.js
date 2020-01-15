@@ -3,23 +3,18 @@ const endpoint = qs('#endpoint');
 const method = qs('#method');
 const parameters = qs('#parameters');
 const request = qs('#request-body');
-const date = new Date();
 
-const container = qs('.json-editor');
-const editor = new JSONEditor(container, {
-  mode: 'view'
-});
+const requestEditor = new JSONEditor(qs('.request-editor'), { mode: 'code' });
+const importEditor = new JSONEditor(qs('.import-editor'), { mode: 'code' });
 
-editor.set({
 
-})
 
 const endpoints = {
   task: {
     GET: null,
     POST: {
       description: 'what needs to be done',
-      due: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+1}`,
+      due: `${dateFns.format(new Date(Date.now() + (1000 * 3600 * 24)), 'YYYY-MM-DD')}`,
       starred: false,
     },
   },
@@ -27,7 +22,7 @@ const endpoints = {
     GET: null,
     PATCH: {
       description: 'modified post',
-      due: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+2}`,
+      due: `${dateFns.format(new Date(Date.now() + (1000 * 3600 * 24)), 'YYYY-MM-DD')}`,
       starred: true,
     },
     DELETE: null,
@@ -58,7 +53,7 @@ const setExample = () => {
   // console.log(examples[endpoint.value]);
   const json = endpoints[endpoint.value][method.value] || null;
   // request.innerHTML = json ? JSON.stringify(json, null, 2) : null;
-  editor.set(json);
+  requestEditor.set(json);
 };
 
 endpoint.evt('input', (e) => {
@@ -72,7 +67,7 @@ method.evt('input', setExample);
 form.evt('submit', (e) => {
   e.preventDefault();
   const url = `/${qs('#endpoint').value.replace(':id', qs('#id').value)}`;
-  const body = qs('#request-body').value ? JSON.parse(qs('#request-body').value) : null;
+  const body = requestEditor.get();
   console.log(body);
 
   ajax(url, qs('#method').value, body)
@@ -89,7 +84,7 @@ form.evt('submit', (e) => {
 qs('#import-button').evt('click', e => {
   e.preventDefault();
   const url = `/task/import`;
-  const body = qs('#import-json').value ? JSON.parse(qs('#import-json').value) : null;
+  const body = importEditor.get();
   console.log(body);
 
   ajax(url, 'POST', body)
