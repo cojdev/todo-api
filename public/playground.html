@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>API Endpoint Playground</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/7.0.4/jsoneditor.min.css">
 </head>
 
 <body>
@@ -40,13 +41,13 @@
           <input type="text" name="id" id="id">
 
           <label for="resquet-body">request body</label>
-          <textarea name="request-body" id="request-body" cols="50" rows="6"></textarea>
+          <div name="request-body" id="request-body" class="json-editor" cols="50" rows="6"></div>
 
           <button class="mb-1" type="submit">Send</button><br>
 
           <label for="import">Import JSON</label>
           <textarea name="import" id="import-json" cols="50" rows="10"></textarea>
-          
+
           <button id="import-button" type="button">Import</button>
         </div>
         <div class="column w-5 fg-0">
@@ -60,6 +61,7 @@
   </main>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/7.0.4/jsoneditor.min.js"></script>
   <script src="helpers.js"></script>
   <script src="script.js"></script>
 </body>
