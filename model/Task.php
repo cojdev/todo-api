@@ -241,13 +241,13 @@ class Task {
       $imported = 0;
 
       if (is_array($data) === false) {
-        throw new Exception('You fucked up', 1);
+        throw new Exception('Invalid format submitted', 400);
       }
 
       foreach ($data as $d) {
         $call = $this->add($d);
         if ($call['success'] === false) {
-          throw new Exception($call['message'], 1);
+          throw new Exception($call['message'], $call['code']);
         }
         $imported++;
       }
@@ -260,7 +260,7 @@ class Task {
     } catch (Exception $e) {
       return [
         'success' => false,
-        "code" => 500,
+        "code" => $e->getCode(),
         'message' => $e->getMessage(),
       ];
     }
