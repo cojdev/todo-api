@@ -5,9 +5,7 @@ const parameters = qs('#parameters');
 const request = qs('#request-body');
 
 const requestEditor = new JSONEditor(qs('.request-editor'), { mode: 'code' });
-const importEditor = new JSONEditor(qs('.import-editor'), { mode: 'code' });
-
-
+const responseViewer = new JSONEditor(qs('.response-viewer'), { mode: 'view' });
 
 const endpoints = {
   task: {
@@ -19,14 +17,17 @@ const endpoints = {
     },
   },
   'task/:id': {
-    GET: null,
+    GET: {},
     PATCH: {
       description: 'modified post',
       due: `${dateFns.format(new Date(Date.now() + (1000 * 3600 * 24)), 'YYYY-MM-DD')}`,
       starred: true,
     },
-    DELETE: null,
+    DELETE: {},
   },
+  'task/import': {
+    POST: IMPORT_DATA,
+  }
 };
 
 const updateMethod = () => {
@@ -73,27 +74,10 @@ form.evt('submit', (e) => {
   ajax(url, qs('#method').value, body)
     .then((data) => {
       console.log(data.parsed);
-      qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
+      responseViewer.set(data.parsed);
     })
     .catch((data) => {
       console.log(data.parsed);
-      qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
-    });
-});
-
-qs('#import-button').evt('click', e => {
-  e.preventDefault();
-  const url = `/task/import`;
-  const body = importEditor.get();
-  console.log(body);
-
-  ajax(url, 'POST', body)
-    .then((data) => {
-      console.log(data.parsed);
-      qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
-    })
-    .catch((data) => {
-      console.log(data.parsed);
-      qs('#response pre').innerHTML = `${JSON.stringify(data.parsed, null, 2)}`;
+      responseViewer.set(data.parsed);
     });
 });
