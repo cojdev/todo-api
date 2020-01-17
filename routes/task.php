@@ -49,6 +49,15 @@ $app->group('/task', function (App $app) {
     return $response->withJson($ret, $ret['code'] ?: 200);
   });
 
+  $app->post('/import[/]', function ($request, $response, $args) {
+    $body = $request->getParsedBody();
+    
+    $model = new Task($this->db);
+    $ret = $model->import($body);
+    
+    return $response->withJson($ret, $ret['code'] ?: 200);
+  });
+  
   // edit task
   $app->patch('/{id}', function ($request, $response, $args) {
     $body = $request->getParsedBody();
@@ -80,12 +89,4 @@ $app->group('/task', function (App $app) {
     return $response->withJson($ret, $ret['code'] ?: 200);
   });
 
-  $app->post('/import[/]', function ($request, $response, $args) {
-    $body = $request->getParsedBody();
-    
-    $model = new Task($this->db);
-    $ret = $model->import($body);
-    
-    return $response->withJson($ret, $ret['code'] ?: 200);
-  });
 });

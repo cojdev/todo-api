@@ -3,16 +3,30 @@
 class Task {
   private $db;
 
+  /**
+   * __construct
+   *
+   * @param  mixed $connection
+   *
+   * @return void
+   */
   function __construct($connection) {
     $this->db = $connection;
   }
 
+  /**
+   * getAll
+   *
+   * @param  mixed $params
+   *
+   * @return void
+   */
   function getAll($params) {
     try {
       // parameters
       // NOTE: this is a significant security hole
       $limit = isset($params['limit']) ? ' LIMIT ' . $params['limit'] : '';
-      $sort = isset($params['sort']) ? ' ORDER BY Task.created ' . $params['sort'] : ' ORDER BY Task.created DESC';
+      $sort = isset($params['sort']) ? ' ORDER BY Task.created ' . $params['sort'] : ' ORDER BY Task.created ASC';
       
       // where clauses
       $whereClauses = [];
@@ -45,6 +59,13 @@ class Task {
     }
   }
 
+  /**
+   * get
+   *
+   * @param  mixed $id
+   *
+   * @return void
+   */
   function get($id) {
     try {
       $query = $this->db->prepare("SELECT * FROM Task WHERE id=?");
@@ -78,14 +99,25 @@ class Task {
     }
   }
 
-  function add($data) {
+  /**
+   * add
+   *
+   * @param  mixed $data
+   * @param  mixed $import
+   *
+   * @return void
+   */
+  function add($data, $import = false) {
     try {
       // validation
       if ($data['description'] === '') {
         throw new Exception("No description provided.", 69);
       }
 
-      if (strtotime($data['due']) < strtotime(date('Y-m-d h:i:s'))) {
+      if (
+        (strtotime($data['due']) < strtotime(date('Y-m-d h:i:s')))
+        && $import === false
+      ) {
         throw new Exception("Date due date cannot be before now.", 69);
         
       }
@@ -96,16 +128,18 @@ class Task {
             description,
             starred,
             due,
+            completed,
             created
           )
         VALUES
-          (?,?,?,NOW())'
+          (?,?,?,?,NOW())'
       );
 
       $result = $query->execute([
         $data['description'],
         $data['starred'] || 0,
         $data['due'],
+        $data['completed'] ?: null,
       ]);
 
       $id = $this->db->query('SELECT LAST_INSERT_ID()')->fetch();
@@ -151,6 +185,14 @@ class Task {
     }
   }
 
+  /**
+   * edit
+   *
+   * @param  mixed $id
+   * @param  mixed $data
+   *
+   * @return void
+   */
   function edit($id, $data) {
     // die(print_r($data, true));
     try {
@@ -203,6 +245,13 @@ class Task {
     }
   }
 
+  /**
+   * delete
+   *
+   * @param  mixed $id
+   *
+   * @return void
+   */
   function delete($id) {
     try {
       $result = $this->db->prepare("DELETE FROM Task WHERE id=?");
@@ -236,6 +285,13 @@ class Task {
     }
   }
 
+  /**
+   * import
+   *
+   * @param  mixed $data
+   *
+   * @return void
+   */
   function import($data) {
     try {
       $imported = 0;
@@ -262,9 +318,8 @@ class Task {
         'success' => false,
         "code" => $e->getCode(),
         'message' => $e->getMessage(),
+        'count' => $imported,
       ];
     }
-    
-
   }
 }
