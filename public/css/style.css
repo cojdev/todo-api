@@ -43,7 +43,7 @@ body {
 .textarea {
   display: block;
   background-color: #fff;
-  border: 2px solid #eee;
+  border: 1px solid #ddd;
   padding: 1ch 1ch;
   line-height: 1rem;
   font-size: .9rem;
