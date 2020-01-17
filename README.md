@@ -7,6 +7,7 @@
 
 ## Setup
 
+### API
 Run docker container
 ```sh
 docker-compose up --build
@@ -24,9 +25,9 @@ docker exec -it <container-id> /bin/bash
 composer install
 ```
 
-## .env file
+### .env file
 Create a .env file in the root of the project with your database details. These can be found in `dockercompose.yml`
-```env
+```sh
 # Database credentials
 DB_HOST=your_database_host
 DB_NAME=your_database_name
@@ -36,13 +37,16 @@ DB_PASS=your_database_password
 
 The application will be accessible at http://localhost:4001
 
+### Playground
+
+You can test endpoints with the api playground at: http://localhost:
+
 ## Endpoints
 
 ### Get all tasks `GET /task`
 <details>
 <summary>Response</summary>
 <p>
-
 ```json
 {
   "success": "Boolean of response success",
@@ -51,7 +55,6 @@ The application will be accessible at http://localhost:4001
   "message": "Response message"
 }
 ```
-
 </p>
 </details>
 
@@ -59,7 +62,6 @@ The application will be accessible at http://localhost:4001
 <details>
 <summary>Request</summary>
 <p>
-
 ```json
 {
   "description": "task description",
@@ -67,21 +69,18 @@ The application will be accessible at http://localhost:4001
   "due": "due date"
 }
 ```
-
 </p>
 </details>
 
 <details>
 <summary>Response</summary>
 <p>
-
 ```json
 {
   "success": "Boolean of response success",
   "message": "Response message"
 }
 ```
-
 </p>
 </details>
 
@@ -90,7 +89,6 @@ The application will be accessible at http://localhost:4001
 <details>
 <summary>Response</summary>
 <p>
-
 ```json
 {
   "success": "Boolean of response success",
@@ -99,7 +97,6 @@ The application will be accessible at http://localhost:4001
   "message": "Response message"
 }
 ```
-
 </p>
 </details>
 
@@ -107,7 +104,6 @@ The application will be accessible at http://localhost:4001
 <details>
 <summary>Response</summary>
 <p>
-
 ```json
 {
   "success": "Boolean of response success",
@@ -116,7 +112,6 @@ The application will be accessible at http://localhost:4001
   "message": "Response message"
 }
 ```
-
 </p>
 </details>
 
@@ -124,7 +119,6 @@ The application will be accessible at http://localhost:4001
 <details>
 <summary>Response</summary>
 <p>
-
 ```json
 {
   "success": "Boolean of response success",
@@ -133,7 +127,6 @@ The application will be accessible at http://localhost:4001
   "message": "Response message"
 }
 ```
-
 </p>
 </details>
 
