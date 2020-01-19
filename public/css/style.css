@@ -123,11 +123,19 @@ body {
   align-items: center;
 }
 
-.loader-inner {
-  width: 80px;
-  height: 80px;
+.loader-icon {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 4px solid #e14;
+  border: 4px solid transparent;
+  border-right-color: #e14;
+  animation: spin 450ms forwards linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .w-1 { width: calc(100% * 1/12 - 1rem); }

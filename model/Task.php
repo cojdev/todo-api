@@ -26,7 +26,7 @@ class Task {
       // parameters
       // NOTE: this is a significant security hole
       $limit = isset($params['limit']) ? ' LIMIT ' . $params['limit'] : '';
-      $sort = isset($params['sort']) ? ' ORDER BY Task.created ' . $params['sort'] : ' ORDER BY Task.created ASC';
+      $sort = isset($params['sort']) ? ' ORDER BY Task.due ' . $params['sort'] : ' ORDER BY Task.due ASC';
       
       // where clauses
       $whereClauses = [];

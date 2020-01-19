@@ -9,7 +9,7 @@ const responseViewer = new JSONEditor(qs('.response-viewer'), { mode: 'view' });
 
 const endpoints = {
   task: {
-    GET: null,
+    GET: {},
     POST: {
       description: 'what needs to be done',
       due: `${dateFns.format(new Date(Date.now() + (1000 * 3600 * 24)), 'YYYY-MM-DD')}`,
