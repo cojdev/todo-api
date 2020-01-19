@@ -4,7 +4,7 @@ use \Slim\App as App;
 $app->group('/task', function (App $app) {
   // get tasks
   $app->get('[/]', function ($request, $response, $args) {
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $params = $request->getQueryParams();
 
     $ret = $model->getAll($params);
@@ -21,7 +21,7 @@ $app->group('/task', function (App $app) {
 
   // get single task
   $app->get('/{id}', function ($request, $response, $args) {
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->get($args['id']);
 
     // get all tasks
@@ -43,7 +43,7 @@ $app->group('/task', function (App $app) {
     $body['due'] = strtotime($body['due']);
     $body['due'] = date('Y-m-d H:i:s', $body['due']);
 
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->add($body);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
@@ -52,7 +52,7 @@ $app->group('/task', function (App $app) {
   $app->post('/import[/]', function ($request, $response, $args) {
     $body = $request->getParsedBody();
     
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->import($body);
     
     return $response->withJson($ret, $ret['code'] ?: 200);
@@ -75,7 +75,7 @@ $app->group('/task', function (App $app) {
     }
     // die(print_r($body, true));
 
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->edit($args['id'], $body);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
@@ -83,7 +83,7 @@ $app->group('/task', function (App $app) {
 
   // delete task
   $app->delete('/{id}', function ($request, $response, $args) {
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->delete($args['id']);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
