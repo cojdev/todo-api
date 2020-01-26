@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Model;
+
+use App\Core\Model;
+
 class TaskModel extends Model {
   /**
    * add
@@ -13,14 +17,14 @@ class TaskModel extends Model {
     try {
       // validation
       if ($data['description'] === '') {
-        throw new Exception("No description provided.", 69);
+        throw new \Exception("No description provided.", 69);
       }
 
       if (
         (strtotime($data['due']) < strtotime(date('Y-m-d h:i:s')))
         && $import === false
       ) {
-        throw new Exception("Date due date cannot be before now.", 69);
+        throw new \Exception("Date due date cannot be before now.", 69);
         
       }
 
@@ -62,14 +66,14 @@ class TaskModel extends Model {
         'message' => "Bad Request",
         'requestBody' => $data,
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         "code" => 500,
         'message' => $e->getMessage(),
         'requestBody' => $data,
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       if ($e->getCode() === 69) {
         return [
           'success' => false,
@@ -132,13 +136,13 @@ class TaskModel extends Model {
         "code" => 404,
         'message' => "Task not found"
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         'code' => 500,
         'message' => $e->getMessage()
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         'code' => 500,
@@ -172,13 +176,13 @@ class TaskModel extends Model {
         'code' => 400,
         'message' => 'Unknown Error. No tasks deleted',
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         "code" => 500,
         'message' => $e->getMessage(),
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         "code" => 500,
@@ -199,13 +203,13 @@ class TaskModel extends Model {
       $imported = 0;
 
       if (is_array($data) === false) {
-        throw new Exception('Invalid format submitted', 400);
+        throw new \Exception('Invalid format submitted', 400);
       }
 
       foreach ($data as $d) {
         $call = $this->add($d);
         if ($call['success'] === false) {
-          throw new Exception($call['message'], $call['code']);
+          throw new \Exception($call['message'], $call['code']);
         }
         $imported++;
       }
@@ -215,7 +219,7 @@ class TaskModel extends Model {
         'message' => 'Import complete',
         'count' => $imported,
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         "code" => $e->getCode(),

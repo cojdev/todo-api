@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 abstract class Model {
   private $db;
 
@@ -36,7 +38,7 @@ abstract class Model {
       $whereSql = count($whereClauses) ? ' WHERE ' . implode('', $whereClauses) : '';
 
       $query = $this->db->query("SELECT * FROM Task$whereSql$sort$limit");
-      $result = $query->fetchAll(PDO::FETCH_ASSOC);
+      $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
       if ($result) {
         return [
@@ -52,9 +54,9 @@ abstract class Model {
         "code" => 404,
         'message' => "No tasks found"
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       die($e->getMessage());
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       die($e->getMessage());
     }
   }
@@ -70,7 +72,7 @@ abstract class Model {
     try {
       $query = $this->db->prepare("SELECT * FROM Task WHERE id=?");
       $query->execute([$id]);
-      $result = $query->rowCount() ? $query->fetch(PDO::FETCH_ASSOC) : false;
+      $result = $query->rowCount() ? $query->fetch(\PDO::FETCH_ASSOC) : false;
   
       if ($result) {
         return [
@@ -84,13 +86,13 @@ abstract class Model {
         "code" => 404,
         'message' => "Task not found"
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         "code" => 500,
         'message' => $e->getMessage()
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         "code" => 500,

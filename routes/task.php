@@ -1,4 +1,6 @@
 <?php
+
+use App\Model\TaskModel;
 use \Slim\App as App;
 
 $app->group('/task', function (App $app) {
