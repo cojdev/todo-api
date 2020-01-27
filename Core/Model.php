@@ -3,7 +3,7 @@
 namespace App\Core;
 
 abstract class Model {
-  private $db;
+  protected $db;
 
   /**
    * __construct
@@ -12,7 +12,7 @@ abstract class Model {
    *
    * @return void
    */
-  function __construct($connection) {
+  public function __construct($connection) {
     $this->db = $connection;
   }
 
@@ -23,7 +23,7 @@ abstract class Model {
    *
    * @return void
    */
-  function getAll($params) {
+  public function getAll($params) {
     try {
       // parameters
       // NOTE: this is a significant security hole
@@ -68,7 +68,7 @@ abstract class Model {
    *
    * @return void
    */
-  function get($id) {
+  public function get($id) {
     try {
       $query = $this->db->prepare("SELECT * FROM Task WHERE id=?");
       $query->execute([$id]);
