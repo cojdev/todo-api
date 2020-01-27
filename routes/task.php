@@ -1,25 +1,12 @@
 <?php
 
+use App\Controller\TaskController;
 use App\Model\TaskModel;
 use \Slim\App as App;
-
+// get tasks
+$app->get('task[/]', TaskController::class, ':index');
 $app->group('/task', function (App $app) {
-  // get tasks
-  $app->get('[/]', function ($request, $response, $args) {
-    $model = new TaskModel($this->db);
-    $params = $request->getQueryParams();
-
-    $ret = $model->getAll($params);
-
-    if (!$ret['success']) {
-      $ret = [
-        "code" => $ret['code'],
-        "message" => $ret['message'],
-      ];
-    }
-
-    return $response->withJson($ret, $ret['code'] ?: 200);
-  });
+  
 
   // get single task
   $app->get('/{id}', function ($request, $response, $args) {
