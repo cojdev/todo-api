@@ -1,3 +1,4 @@
+/* eslint-disable */
 const form = qs('form');
 const endpoint = qs('#endpoint');
 const method = qs('#method');
@@ -36,6 +37,17 @@ const updateMethod = () => {
     `).join('');
 };
 
+const argTemplate = (arg) => {
+  return `
+    <label class="label" for="arg-${arg}">${arg}</label>
+    <input class="input" type="text" name="${arg}" id="${arg}">
+  `;
+};
+
+const setArgs = () => {
+
+};
+
 // const updateParams = () => {
 //   parameters.innerHTML = Object.keys(endpoints[endpoint.value]).map(item => `
 //       <option value="${item}">${item}</option>
@@ -61,6 +73,7 @@ endpoint.evt('input', (e) => {
   console.log(e.currentTarget);
   updateMethod();
   setExample();
+  setArgs();
 });
 
 method.evt('input', setExample);

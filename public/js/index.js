@@ -1,3 +1,4 @@
+/* eslint-disable */
 qs('#due').valueAsDate = new Date(Date.now() + (24 * 60 * 60 * 1000));
 const form = document.getElementById('add-form');
 const output = qs('.output');
@@ -49,7 +50,7 @@ function loadTasks(limit = 0) {
         <td>${dateFns.format(item.due, 'Do MMM YY')}</td>
         <td>${item.starred}</td>
         <td>${item.completed ? `yes (${dateFns.format(item.completed, 'D.MM.YY')})` : 'no'}</td>
-        <td><button class="button" data-id="${item.id}">Delete</button></td>
+        <td><button class="button delete-button" data-id="${item.id}">Delete</button></td>
       </tr>`).join('')}
     </table>`;
     taskCount.innerText = `${json.data.length} (${json.data.filter(item => item.completed !== null).length} completed)`;

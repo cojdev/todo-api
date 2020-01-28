@@ -22,7 +22,7 @@ class TaskController extends Controller {
     return $response->withJson($ret, $ret['code'] ?: 200);
   }
 
-  public function getSingle($request, $response, $args) {
+  public function single($request, $response, $args) {
     $model = new TaskModel($this->db);
     $ret = $model->get($args['id']);
 
@@ -46,6 +46,44 @@ class TaskController extends Controller {
 
     $model = new TaskModel($this->db);
     $ret = $model->add($body);
+
+    return $response->withJson($ret, $ret['code'] ?: 200);
+  }
+
+  public function import($request, $response, $args) {
+    $body = $request->getParsedBody();
+    
+    $model = new TaskModel($this->db);
+    $ret = $model->import($body);
+    
+    return $response->withJson($ret, $ret['code'] ?: 200);
+  }
+
+  function edit($request, $response, $args) {
+    $body = $request->getParsedBody();
+    // die(print_r($body, true));
+
+    // convert to sql datetime
+    if ($body['due']) {
+      $body['due'] = strtotime($body['due']);
+      $body['due'] = date('Y-m-d H:i:s', $body['due']);
+    }
+
+    if ($body['completed'] && $body['completed'] !== null) {
+      $body['completed'] = strtotime($body['completed']);
+      $body['completed'] = date('Y-m-d H:i:s', $body['completed']);
+    }
+    // die(print_r($body, true));
+
+    $model = new TaskModel($this->db);
+    $ret = $model->edit($args['id'], $body);
+
+    return $response->withJson($ret, $ret['code'] ?: 200);
+  }
+
+  function delete($request, $response, $args) {
+    $model = new TaskModel($this->db);
+    $ret = $model->delete($args['id']);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
   }
