@@ -1,5 +1,20 @@
 # Todo API
 
+- [Todo API](#todo-api)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+    - [API](#api)
+    - [.env file](#env-file)
+    - [Playground](#playground)
+  - [Endpoints](#endpoints)
+    - [Get all tasks - `GET /task`](#get-all-tasks---get-task)
+    - [Add task - `POST /task`](#add-task---post-task)
+    - [Get task by id - `GET /task/:id`](#get-task-by-id---get-taskid)
+    - [Edit task by id - `PATCH /task/:id`](#edit-task-by-id---patch-taskid)
+    - [Delete task by id - `DELETE /task/:id`](#delete-task-by-id---delete-taskid)
+  - [Model](#model)
+    - [Task](#task)
+
 ## Requirements
 * PHP 7
 * MariaDB/MySQL
