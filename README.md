@@ -44,9 +44,7 @@ You can test endpoints with the api playground at: http://localhost:
 ## Endpoints
 
 ### Get all tasks `GET /task`
-<details>
-<summary>Response</summary>
-<p>
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -55,13 +53,10 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ### Add task - `POST /task`
-<details>
-<summary>Request</summary>
-<p>
+
+**Request**
 ```json
 {
   "description": "task description",
@@ -69,26 +64,18 @@ You can test endpoints with the api playground at: http://localhost:
   "due": "due date"
 }
 ```
-</p>
-</details>
 
-<details>
-<summary>Response</summary>
-<p>
+**Response**
 ```json
 {
   "success": "Boolean of response success",
   "message": "Response message"
 }
 ```
-</p>
-</details>
-
 
 ### Get task by id - `GET /task/:id`
-<details>
-<summary>Response</summary>
-<p>
+
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -97,13 +84,10 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ### Edit task by id - `PATCH /task/:id`
-<details>
-<summary>Response</summary>
-<p>
+
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -112,13 +96,10 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ### Delete task by id - `DELETE /task/:id`
-<details>
-<summary>Response</summary>
-<p>
+
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -127,8 +108,6 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ---
 
