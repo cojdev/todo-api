@@ -36,9 +36,9 @@
             </div>
           </div>
 
-          <div class="js-args"></div>
+          <div class="js-args row"></div>
 
-          <h2 class="h2">Params</h2>
+          <!-- <h2 class="h2">Params</h2>
           <div class="row" id="parameters">
             <div class="column w-6">
               <label for="limit" class="label">Limit</label>
@@ -49,8 +49,7 @@
               <input type="text" class="input">
             </div>
             
-            
-          </div>
+          </div> -->
 
           <label class="label" for="resquet-body">request body</label>
           <div name="request-body" id="request-body" class="request-editor json-editor"></div>
@@ -60,6 +59,8 @@
 
         <!-- Response -->
         <div class="column w-6 fg-0">
+          <label for="request" class="label">request</label>
+          <pre class="code" id="request">METHOD url</pre>
           <label class="label" for="response">response</label>
           <output class="output response-viewer json-viewer" id="response">
           </output>

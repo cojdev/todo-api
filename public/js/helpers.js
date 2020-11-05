@@ -1,5 +1,14 @@
-/* eslint-disable no-unused-vars */
-const qs = (selector, element = document) => element.querySelector(selector);
+/* eslint-disable */
+const qs = (selector, element = document) => {
+  const nodeList = element.querySelectorAll(selector);
+
+  if (nodeList.length === 1) {
+    return nodeList[0];
+  }
+
+  return nodeList;
+};
+
 EventTarget.prototype.evt = function (event, callback) {
   this.addEventListener(event, callback);
 };
@@ -19,11 +28,10 @@ function ajax(url, method, requestBody = null) {
         } catch (e) {
           if (e.message.includes('end of JSON')) {
             return resolve({ raw: xhr.responseText });
-          };
-          console.log(e.message); 
+          }
+          console.log(e.message);
           console.error(e);
         }
-        
       } else {
         // We reached our target server, but it returned an error
         return reject({
