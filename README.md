@@ -1,5 +1,20 @@
 # Todo API
 
+- [Todo API](#todo-api)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+    - [API](#api)
+    - [.env file](#env-file)
+    - [Playground](#playground)
+  - [Endpoints](#endpoints)
+    - [Get all tasks - `GET /task`](#get-all-tasks---get-task)
+    - [Add task - `POST /task`](#add-task---post-task)
+    - [Get task by id - `GET /task/:id`](#get-task-by-id---get-taskid)
+    - [Edit task by id - `PATCH /task/:id`](#edit-task-by-id---patch-taskid)
+    - [Delete task by id - `DELETE /task/:id`](#delete-task-by-id---delete-taskid)
+  - [Model](#model)
+    - [Task](#task)
+
 ## Requirements
 * PHP 7
 * MariaDB/MySQL
@@ -44,9 +59,7 @@ You can test endpoints with the api playground at: http://localhost:
 ## Endpoints
 
 ### Get all tasks `GET /task`
-<details>
-<summary>Response</summary>
-<p>
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -55,13 +68,10 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ### Add task - `POST /task`
-<details>
-<summary>Request</summary>
-<p>
+
+**Request**
 ```json
 {
   "description": "task description",
@@ -69,26 +79,18 @@ You can test endpoints with the api playground at: http://localhost:
   "due": "due date"
 }
 ```
-</p>
-</details>
 
-<details>
-<summary>Response</summary>
-<p>
+**Response**
 ```json
 {
   "success": "Boolean of response success",
   "message": "Response message"
 }
 ```
-</p>
-</details>
-
 
 ### Get task by id - `GET /task/:id`
-<details>
-<summary>Response</summary>
-<p>
+
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -97,13 +99,10 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ### Edit task by id - `PATCH /task/:id`
-<details>
-<summary>Response</summary>
-<p>
+
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -112,13 +111,10 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ### Delete task by id - `DELETE /task/:id`
-<details>
-<summary>Response</summary>
-<p>
+
+**Response**
 ```json
 {
   "success": "Boolean of response success",
@@ -127,8 +123,6 @@ You can test endpoints with the api playground at: http://localhost:
   "message": "Response message"
 }
 ```
-</p>
-</details>
 
 ---
 
