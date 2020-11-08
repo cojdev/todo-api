@@ -41,14 +41,7 @@ composer install
 ```
 
 ### .env file
-Create a .env file in the root of the project with your database details. These can be found in `dockercompose.yml`
-```sh
-# Database credentials
-DB_HOST=your_database_host
-DB_NAME=your_database_name
-DB_USER=your_database_username
-DB_PASS=your_database_password
-```
+Create a .env file in the root of the project with your database details. Use `.env.example` as template.
 
 The application will be accessible at http://localhost:4001
 

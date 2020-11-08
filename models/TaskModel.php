@@ -1,104 +1,10 @@
 <?php
 
-class Task {
-  private $db;
+namespace App\Model;
 
-  /**
-   * __construct
-   *
-   * @param  mixed $connection
-   *
-   * @return void
-   */
-  function __construct($connection) {
-    $this->db = $connection;
-  }
+use App\Core\Model;
 
-  /**
-   * getAll
-   *
-   * @param  mixed $params
-   *
-   * @return void
-   */
-  function getAll($params) {
-    try {
-      // parameters
-      // NOTE: this is a significant security hole
-      $limit = isset($params['limit']) ? ' LIMIT ' . $params['limit'] : '';
-      $sort = isset($params['sort']) ? ' ORDER BY Task.created ' . $params['sort'] : ' ORDER BY Task.created ASC';
-      
-      // where clauses
-      $whereClauses = [];
-      isset($params['date']) ? $whereClauses[] = 'due="'.$params['date'].'"' : null;
-      isset($params['starred']) ? $whereClauses[] = 'starred="'.$params['starred'].'"' : null;
-      isset($params['completed']) ? $whereClauses[] = ((int)$params['completed'] === 0 ? 'completed IS NULL' : 'completed IS NOT NULL') : null;
-      $whereSql = count($whereClauses) ? ' WHERE ' . implode('', $whereClauses) : '';
-
-      $query = $this->db->query("SELECT * FROM Task$whereSql$sort$limit");
-      $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-      if ($result) {
-        return [
-          'success' => true,
-          'count' => count($result),
-          'data' => $result,
-          'params' => $params,
-        ];
-      }
-
-      return [
-        'success' => false,
-        "code" => 404,
-        'message' => "No tasks found"
-      ];
-    } catch (PDOException $e) {
-      die($e->getMessage());
-    } catch (Exception $e) {
-      die($e->getMessage());
-    }
-  }
-
-  /**
-   * get
-   *
-   * @param  mixed $id
-   *
-   * @return void
-   */
-  function get($id) {
-    try {
-      $query = $this->db->prepare("SELECT * FROM Task WHERE id=?");
-      $query->execute([$id]);
-      $result = $query->rowCount() ? $query->fetch(PDO::FETCH_ASSOC) : false;
-  
-      if ($result) {
-        return [
-          'success' => true,
-          'data' => $result,
-        ];
-      }
-
-      return [
-        'success' => false,
-        "code" => 404,
-        'message' => "Task not found"
-      ];
-    } catch (PDOException $e) {
-      return [
-        'success' => false,
-        "code" => 500,
-        'message' => $e->getMessage()
-      ];
-    } catch (Exception $e) {
-      return [
-        'success' => false,
-        "code" => 500,
-        'message' => $e->getMessage()
-      ];
-    }
-  }
-
+class TaskModel extends Model {
   /**
    * add
    *
@@ -111,14 +17,14 @@ class Task {
     try {
       // validation
       if ($data['description'] === '') {
-        throw new Exception("No description provided.", 69);
+        throw new \Exception("No description provided.", 69);
       }
 
       if (
         (strtotime($data['due']) < strtotime(date('Y-m-d h:i:s')))
         && $import === false
       ) {
-        throw new Exception("Date due date cannot be before now.", 69);
+        throw new \Exception("Date due date cannot be before now.", 69);
         
       }
 
@@ -160,14 +66,14 @@ class Task {
         'message' => "Bad Request",
         'requestBody' => $data,
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         "code" => 500,
         'message' => $e->getMessage(),
         'requestBody' => $data,
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       if ($e->getCode() === 69) {
         return [
           'success' => false,
@@ -230,13 +136,13 @@ class Task {
         "code" => 404,
         'message' => "Task not found"
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         'code' => 500,
         'message' => $e->getMessage()
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         'code' => 500,
@@ -270,13 +176,13 @@ class Task {
         'code' => 400,
         'message' => 'Unknown Error. No tasks deleted',
       ];
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return [
         'success' => false,
         "code" => 500,
         'message' => $e->getMessage(),
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         "code" => 500,
@@ -297,13 +203,13 @@ class Task {
       $imported = 0;
 
       if (is_array($data) === false) {
-        throw new Exception('Invalid format submitted', 400);
+        throw new \Exception('Invalid format submitted', 400);
       }
 
       foreach ($data as $d) {
         $call = $this->add($d);
         if ($call['success'] === false) {
-          throw new Exception($call['message'], $call['code']);
+          throw new \Exception($call['message'], $call['code']);
         }
         $imported++;
       }
@@ -313,7 +219,7 @@ class Task {
         'message' => 'Import complete',
         'count' => $imported,
       ];
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       return [
         'success' => false,
         "code" => $e->getCode(),

@@ -1,10 +1,13 @@
 <?php
-use \Slim\App as App;
 
-$app->group('/task', function (App $app) {
-  // get tasks
-  $app->get('[/]', function ($request, $response, $args) {
-    $model = new Task($this->db);
+namespace App\Controller;
+
+use App\Core\Controller;
+use App\Model\TaskModel;
+
+class TaskController extends Controller {
+  public function index($request, $response, $args) {
+    $model = new TaskModel($this->container->db);
     $params = $request->getQueryParams();
 
     $ret = $model->getAll($params);
@@ -17,11 +20,10 @@ $app->group('/task', function (App $app) {
     }
 
     return $response->withJson($ret, $ret['code'] ?: 200);
-  });
+  }
 
-  // get single task
-  $app->get('/{id}', function ($request, $response, $args) {
-    $model = new Task($this->db);
+  public function single($request, $response, $args) {
+    $model = new TaskModel($this->db);
     $ret = $model->get($args['id']);
 
     // get all tasks
@@ -33,33 +35,31 @@ $app->group('/task', function (App $app) {
     }
 
     return $response->withJson($ret, $ret['code'] ?: 200);
-  });
+  }
 
-  // add task
-  $app->post('[/]', function ($request, $response, $args) {
+  public function add($request, $response, $args) {
     $body = $request->getParsedBody();
     
     // convert to sql datetime
     $body['due'] = strtotime($body['due']);
     $body['due'] = date('Y-m-d H:i:s', $body['due']);
 
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->add($body);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
-  });
+  }
 
-  $app->post('/import[/]', function ($request, $response, $args) {
+  public function import($request, $response, $args) {
     $body = $request->getParsedBody();
     
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->import($body);
     
     return $response->withJson($ret, $ret['code'] ?: 200);
-  });
-  
-  // edit task
-  $app->patch('/{id}', function ($request, $response, $args) {
+  }
+
+  function edit($request, $response, $args) {
     $body = $request->getParsedBody();
     // die(print_r($body, true));
 
@@ -75,18 +75,16 @@ $app->group('/task', function (App $app) {
     }
     // die(print_r($body, true));
 
-    $model = new Task($this->db);
+    $model = new TaskModel($this->db);
     $ret = $model->edit($args['id'], $body);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
-  });
+  }
 
-  // delete task
-  $app->delete('/{id}', function ($request, $response, $args) {
-    $model = new Task($this->db);
+  function delete($request, $response, $args) {
+    $model = new TaskModel($this->db);
     $ret = $model->delete($args['id']);
 
     return $response->withJson($ret, $ret['code'] ?: 200);
-  });
-
-});
+  }
+}

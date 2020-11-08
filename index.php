@@ -68,7 +68,7 @@ $app->get('/', function ($request, $response, $args) {
 });
 
 // import routes
-require './routes/task.php';
+require './routes.php';
 
 // 404
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
