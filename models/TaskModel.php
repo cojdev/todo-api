@@ -100,28 +100,29 @@ class TaskModel extends Model {
    * @return void
    */
   function edit($id, $data) {
-    // die(print_r($data, true));
     try {
+      $query = '';
+      $params = [];
+
+      // ignore empty fields
+      foreach ($data as $key => $value) {
+        $query .= "{$key}=?,";
+        $params[] = $value;
+      }
+
+      $params[] = $id;
+
       $result = $this->db->prepare(
         "UPDATE
           Task
         SET
-          description=?,
-          completed=?,
-          starred=?,
-          due=?,
+          {$query}
           modified=NOW()
         WHERE
           id=?"
       );
       
-      $result->execute([
-        $data['description'],
-        $data['completed'],
-        $data['starred'],
-        $data['due'],
-        $id,
-      ]);
+      $result->execute($params);
 
       if ($result->rowCount()) {
         return [
